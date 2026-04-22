@@ -16,14 +16,6 @@ class BaseApp(EClient, EWrapper):
         thread = threading.Thread(target=self.run)
         thread.start()
 
-        # Wait for connection to establish
-        start = time.time()
-        while not self.isConnected():
-            if time.time() - start > 5:
-                print("Connection timeout!")
-                self.disconnect()
-                exit(1)
-
         # Wait for nextValidId callback
         start = time.time()
         while not hasattr(self, "order_id"):
