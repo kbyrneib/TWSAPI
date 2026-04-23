@@ -3,6 +3,23 @@ from ibapi.wrapper import *
 
 import threading, time, csv
 
+"""
+Running this script directly will produce the file news_codes.csv
+
+The headers of this CSV file are Symbol, Name, Subject
+
+The Subject is stored in the tradingClass of the Contract object
+
+The Symbol may be used to build a Contract for a subsequent Broadtape news request e.g.:
+
+contract = Contract()
+contract.symbol  = "BRFUPDN:BRF_ALL"
+contract.secType = "NEWS"
+contract.exchange = "BRFUPDN"
+
+self.reqMktData(reqId, contract, "mdoff,292", False, False, [])
+"""
+
 class NewsApp(EClient, EWrapper):
     def __init__(self, host="localhost", port=7497, client_id=0):
         self.host = host
@@ -42,7 +59,7 @@ class NewsApp(EClient, EWrapper):
         if self.num_requests == len(self.providers):
             with open('news_codes.csv', 'w', newline='') as csvfile:
                 writer = csv.writer(csvfile)
-                writer.writerow(["Symbol", "Name", "Subject (Trading Class)"])
+                writer.writerow(["Symbol", "Name", "Subject"])
                 writer.writerows(self.news_codes)
             
             print("Provider codes saved to news_codes.csv")
