@@ -47,6 +47,18 @@ class NewsApp(EClient, EWrapper):
         self.news_codes = []
         self.num_requests = 0
 
+    def error(self, reqId, errorTime, errorCode, errorString, advancedOrderRejectJson=""):
+        if errorCode == 321:
+            print(errorCode, errorString)
+            self.num_requests += 1
+            if self.num_requests == len(self.providers):
+                with open('news_codes.csv', 'w', newline='') as csvfile:
+                    writer = csv.writer(csvfile)
+                    writer.writerow(["Symbol", "Name", "Subject"])
+                    writer.writerows(self.news_codes)
+            
+                print("Provider codes saved to news_codes.csv")
+
     def nextValidId(self, orderId):
         self.order_id = orderId
 
