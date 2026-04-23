@@ -16,7 +16,6 @@ class NewsApp(EClient, EWrapper):
         thread = threading.Thread(target=self.run)
         thread.start()
 
-        # Wait for nextValidId callback
         start = time.time()
         while not hasattr(self, "order_id"):
             if time.time() - start > 5:
@@ -24,6 +23,7 @@ class NewsApp(EClient, EWrapper):
                 self.disconnect()
                 exit(1)
 
+        self.providers = ["BRFG", "BRFUPDN", "BZ", "DJ", "DJNL", "DJTOP", "FLY"]
         self.news_codes = []
         self.num_requests = 0
 
@@ -39,17 +39,21 @@ class NewsApp(EClient, EWrapper):
 
     def contractDetailsEnd(self, reqId):
         self.num_requests += 1
-        if self.num_requests == 7:
+        if self.num_requests == len(self.providers):
             with open('news_codes.csv', 'w', newline='') as csvfile:
                 writer = csv.writer(csvfile)
                 writer.writerow(["Symbol", "Name", "Subject (Trading Class)"])
                 writer.writerows(self.news_codes)
+            
+            print("Provider codes saved to news_codes.csv")
+            try:
+                self.disconnect()
+            except:
+                pass
 
 app = NewsApp()
 
-providers = ["BRFG", "BRFUPDN", "BZ", "DJ", "DJNL", "DJTOP", "FLY"]
-
-for provider in providers:
+for provider in app.providers:
     contract = Contract()
     contract.secType = "NEWS"
     contract.exchange = provider
