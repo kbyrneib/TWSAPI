@@ -18,6 +18,9 @@ contract.secType = "NEWS"
 contract.exchange = "BRFUPDN"
 
 self.reqMktData(reqId, contract, "mdoff,292", False, False, [])
+
+There is no gaurantee that a particular symbol will return results
+The purpose of this script is simply to gather an overall symbol list
 """
 
 class NewsApp(EClient, EWrapper):
