@@ -63,10 +63,6 @@ class NewsApp(EClient, EWrapper):
                 writer.writerows(self.news_codes)
             
             print("Provider codes saved to news_codes.csv")
-            try:
-                self.disconnect()
-            except:
-                pass
 
 app = NewsApp()
 
