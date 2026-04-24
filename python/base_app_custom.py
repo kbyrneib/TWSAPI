@@ -3,6 +3,11 @@ from ibapi.wrapper import *
 
 import threading, time
 
+"""
+Create child class that inherits from BaseAppCustom
+Then, just add any extra callbacks you neeed
+"""
+
 class BaseAppCustom(EClient, EWrapper):
     def __init__(self, host="localhost", port=7497, client_id=0):
         self.host = host
@@ -36,5 +41,3 @@ class BaseAppCustom(EClient, EWrapper):
 
     def connectionClosed(self):
         self.connect(self.host, self.port, self.client_id)
-
-    # Add relevant wrapper callbacks below
