@@ -3,7 +3,7 @@ from ibapi.wrapper import *
 
 import threading, time
 
-class BaseApp(EClient, EWrapper):
+class BaseAppCustom(EClient, EWrapper):
     def __init__(self, host="localhost", port=7497, client_id=0):
         self.host = host
         self.port = port
