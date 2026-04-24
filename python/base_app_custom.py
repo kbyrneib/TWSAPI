@@ -6,6 +6,7 @@ import threading, time
 """
 Create child class that inherits from BaseAppCustom
 Then, just add any extra callbacks you neeed
+Or, just add the callbacks directly to BaseAppCustom
 """
 
 class BaseAppCustom(EClient, EWrapper):
